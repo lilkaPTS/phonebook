@@ -13,7 +13,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
         try{
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-
             System.out.println("Телефонная книга:\nДоступные функции:");
             while(true){
                 System.out.println("1.Ввести все контакты");
@@ -23,7 +22,6 @@ public class Main {
                 System.out.println("5.Выйти из приложения");
                 if(in.hasNextInt()) {
                     int functionNumber = in.nextInt();
-
                     if (functionNumber == 1) {
                         System.out.println("Контакты:");
                         Statement statement = connection.createStatement();
@@ -47,15 +45,50 @@ public class Main {
                         preparedStatement.executeUpdate();
                     }
                     if(functionNumber == 3){
-
+                        System.out.println("Удаление контакта:");
+                        System.out.println("Введите id контакта:");
+                        in.nextLine();
+                        if(in.hasNextInt()){
+                        int contactId = in.nextInt();
+                        PreparedStatement preparedStatement = connection.prepareStatement("delete from contacts where id = ?");
+                        preparedStatement.setInt(1,contactId);
+                        preparedStatement.executeUpdate();
+                        }
                     }
                     if(functionNumber == 4){
-
+                        System.out.println("Редактирование контакта:");
+                        System.out.println("Введите id контакта:");
+                            if(in.hasNextInt()){
+                                int contactId = in.nextInt();
+                                System.out.println("Функции:\n1.Редактировать имя\n2.Редактировать номер");
+                                if(in.hasNextInt()){
+                                    int functionId = in.nextInt();
+                                    if(functionId == 1){
+                                        System.out.println("Введите новое имя");
+                                        in.nextLine();
+                                        String contactName = in.nextLine();
+                                        PreparedStatement preparedStatement = connection.prepareStatement("update contacts set name = ? where id = ?");
+                                        preparedStatement.setString(1, contactName);
+                                        preparedStatement.setInt(2,contactId);
+                                        preparedStatement.executeUpdate();
+                                    }
+                                    if(functionId==2){
+                                        System.out.println("Введите новый номер");
+                                        in.nextLine();
+                                        String contactNumber = in.nextLine();
+                                        PreparedStatement preparedStatement = connection.prepareStatement("update contacts set number = ? where id = ?");
+                                        preparedStatement.setString(1, contactNumber);
+                                        preparedStatement.setInt(2,contactId);
+                                        preparedStatement.executeUpdate();
+                                    }
+                                }
+                            }
                     }
                     if (functionNumber == 5) {
                         System.exit(0);
                     }
                 }
+                in.nextLine();
             }
         }catch (Exception ex){
             System.out.println(ex.getMessage());
