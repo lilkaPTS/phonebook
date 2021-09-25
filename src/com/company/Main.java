@@ -19,7 +19,7 @@ public class Main {
                 System.out.println("1.Ввести все контакты");
                 System.out.println("2.Добавить контакт");
                 System.out.println("3.Удалить контакт");
-                System.out.println("4.Изменить контакт контакт");
+                System.out.println("4.Изменить контакт");
                 System.out.println("5.Выйти из приложения");
                 if(in.hasNextInt()) {
                     int functionNumber = in.nextInt();
@@ -45,6 +45,12 @@ public class Main {
                         preparedStatement.setString(1,contactName);
                         preparedStatement.setString(2,contactNumber);
                         preparedStatement.executeUpdate();
+                    }
+                    if(functionNumber == 3){
+
+                    }
+                    if(functionNumber == 4){
+
                     }
                     if (functionNumber == 5) {
                         System.exit(0);
